@@ -30,6 +30,7 @@ class LLMs:
         )
 
         msg = resp.choices[0].message
+        print(msg)
 
         if (Tc :=  msg.tool_calls) is not None:
             messages.append({
@@ -41,7 +42,7 @@ class LLMs:
                         "type": "function",
                         "function": {
                             "name": tc.function.name,
-                            "arguments": tc.function.arguments,  # 字串即可
+                            "arguments": tc.function.arguments,
                     }
                 }
             for tc in Tc
@@ -49,14 +50,14 @@ class LLMs:
             })
 
             tool_msg = gpt_tool_call(Tc)
-
             for msg in tool_msg:
                 messages.append(msg)
                 resp = self.client.chat.completions.create(
                     model=model,
                     messages=messages
-            )
+                )
 
+        print(resp.choices[0].message.content)        
         return resp.choices[0].message.content
 
 def gpt_tool_call(Tc:ChatCompletionMessageFunctionToolCall)->List:
@@ -68,6 +69,7 @@ def gpt_tool_call(Tc:ChatCompletionMessageFunctionToolCall)->List:
             if name in DISPATCH:
                 try:
                     result = DISPATCH[name](**args)
+                    print(result)
                 except TypeError as e:
                     result = {"error": f"bad arguments: {e}"}
                 except Exception as e:

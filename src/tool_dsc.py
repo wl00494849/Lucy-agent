@@ -9,4 +9,13 @@ get_system_information_tool = {
     }
 }
 
-TOOLS = [get_system_information_tool]
+get_taipei_time_tool = {
+    "type":"function",
+    "function":{
+        "name":"get_taipei_time",
+        "description":"取得當地時間(臺北)",
+        "parameters":{},
+        "required":[]
+    }
+}
+TOOLS = [get_system_information_tool,get_taipei_time_tool]
