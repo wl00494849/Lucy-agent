@@ -1,0 +1,4 @@
+*.env
+*.tar
+myenv
+__pycache__
