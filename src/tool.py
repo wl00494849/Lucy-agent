@@ -10,8 +10,13 @@ class TOOL:
         系統平台:{platform.platform()}
         處理器:{platform.processor()}
         """
+    
     def get_taipei_time()->str:
         "取得當地時間(臺北)"
         now = datetime.now(ZoneInfo("Asia/Taipei"))
         time = now.strftime("Taipei Time:%Y-%m-%d %H:%M:%S")
         return time
+    
+    # time ISO 8601 格式
+    def create_calendar_event():
+        pass
