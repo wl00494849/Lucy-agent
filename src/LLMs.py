@@ -1,15 +1,16 @@
 from typing import List
 from openai import OpenAI
 from pydantic import BaseModel
-from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletionMessage
+from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletionMessage,ChatCompletion
 from src.dispatch import DISPATCH
 from src.tool_dsc import TOOLS
 import json
 import os
 
 class LLMs:
-    class GPT_Requset(BaseModel):
-        prompt:str
+    class LineBot_Requset(BaseModel):
+        message:str
+        userID:str
 
     def __init__(self,defult_model:str=""):
         self.__api_key = os.getenv("OPENAI_API_KEY")
@@ -17,32 +18,26 @@ class LLMs:
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
 
-    def request(self,item:GPT_Requset)->str:
-        model = self.defult_model             
+    def request(self,item:LineBot_Requset)->str:       
 
-        self.memory.append({"role": "system","content": "請以繁體中文回答。"})
-        self.memory.append({"role": "user","content": item.prompt})
+        self.memory.append({"role": "system","content": "妳是個冷豔可靠的秘書。請以繁體中文回答。"})
+        self.memory.append({"role": "system","content": f"LineBot UserID:{item.userID}"})
+        self.memory.append({"role": "user","content": item.message})
 
-        resp = self.client.chat.completions.create(
-            model=model,
-            messages=self.memory,
-            tools=TOOLS
-        )
+        resp = self.__get_gpt_response()
 
         msg = resp.choices[0].message
+        Tc = msg.tool_calls
 
-        if (Tc :=  msg.tool_calls) is not None:
+        while Tc is not None:
+            print(Tc)
             self.__add_tool_message(Tc,msg)
             self.__gpt_tool_call(Tc)
 
-            resp = self.client.chat.completions.create(
-                model=model,
-                messages=self.memory
-            )
-
+            resp = self.__get_gpt_response()
+            Tc = resp.choices[0].message.tool_calls
             print(resp.choices[0].message.content)
                 
-
         return resp.choices[0].message.content
 
     def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):
@@ -59,7 +54,8 @@ class LLMs:
                         result = {"error": f"handler failed: {e}"}
                 else:
                     result = {"error": f"unknown tool: {name}"}
-
+                print(result)
+                
                 self.memory.append(
                     {
                         "role":"tool",
@@ -68,6 +64,13 @@ class LLMs:
                         "content":json.dumps(result,ensure_ascii=False)
                     }
                 )
+        
+    def __get_gpt_response(self,)->ChatCompletion:
+        return self.client.chat.completions.create(
+            model=self.defult_model,
+            messages=self.memory,
+            tools=TOOLS
+        )
 
     def __add_tool_message(self,Tc:ChatCompletionMessageFunctionToolCall,msg:ChatCompletionMessage):
         for tc in Tc:

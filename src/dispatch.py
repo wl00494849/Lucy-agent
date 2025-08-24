@@ -1,6 +1,10 @@
-from src.tool import TOOL
+from src.tool.sys_tool import SYS_TOOL
+from src.task.task import TASK
+
+TASK = TASK()
 
 DISPATCH = {
-    "get_system_information":TOOL.get_system_information,
-    "get_taipei_time":TOOL.get_taipei_time
+    "get_system_information":SYS_TOOL.get_system_information,
+    "get_taipei_time":SYS_TOOL.get_taipei_time,
+    "timer_notify":TASK.timer_notify
 }

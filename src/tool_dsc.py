@@ -1,3 +1,19 @@
+timer_notify = {
+    "type":"function",
+    "function":{
+        "name":"timer_notify",
+        "description":"定時通知",
+        "parameters":{
+            "type":"object",
+            "properties": {
+                "time_sec":{"type":"integer","description": "倒數秒數，例如 60 代表 1 分鐘後通知"},
+                "message":{"type":"string","description":"時間到通知訊息"},
+                "userid":{"type":"string","description":"LineBot的UserID"}
+            }
+        },
+        "required":["time_sec","message","userid"]
+    }
+}
 
 get_system_information_tool = {
     "type":"function",
@@ -45,4 +61,4 @@ create_calendar_event_tool = {
             "strict": True,
         },
     }
-TOOLS = [get_system_information_tool,get_taipei_time_tool]
+TOOLS = [get_system_information_tool,get_taipei_time_tool,timer_notify]

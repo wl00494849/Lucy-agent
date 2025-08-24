@@ -2,7 +2,7 @@ import platform
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-class TOOL:
+class SYS_TOOL:
     def get_system_information()->str:
         "取得當前系統資訊"
         return f"""
@@ -17,6 +17,5 @@ class TOOL:
         time = now.strftime("Taipei Time:%Y-%m-%d %H:%M:%S")
         return time
     
-    # time ISO 8601 格式
-    def create_calendar_event():
-        pass
+ 
+    
