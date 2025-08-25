@@ -2,3 +2,4 @@ openai==1.99.6
 fastapi
 requests
 uvicorn
+python-dateutil

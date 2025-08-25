@@ -1,8 +1,25 @@
-timer_notify = {
+timer_notify_byISO8601 = {
     "type":"function",
     "function":{
-        "name":"timer_notify",
-        "description":"定時通知",
+        "name":"timer_notify_byISO8601",
+        "description":"LineBot長時間定時通知",
+        "parameters":{
+            "type":"object",
+            "properties": {
+                "time_iso":{"type":"string","description": "ISO8601時間格式，通知時間"},
+                "message":{"type":"string","description":"時間到通知訊息"},
+                "userid":{"type":"string","description":"LineBot的UserID"}
+            }
+        },
+        "required":["time_iso","message","userid"]
+    }
+}
+
+timer_notify_bySec = {
+    "type":"function",
+    "function":{
+        "name":"timer_notify_bySec",
+        "description":"LineBot短時間倒數計時通知",
         "parameters":{
             "type":"object",
             "properties": {
@@ -25,15 +42,15 @@ get_system_information_tool = {
     }
 }
 
-get_taipei_time_tool = {
-    "type":"function",
-    "function":{
-        "name":"get_taipei_time",
-        "description":"取得當地時間(臺北)",
-        "parameters":{},
-        "required":[]
-    }
-}
+# get_taipei_time_tool = {
+#     "type":"function",
+#     "function":{
+#         "name":"get_taipei_time",
+#         "description":"取得當地時間(臺北)",
+#         "parameters":{},
+#         "required":[]
+#     }
+# }
 
 create_calendar_event_tool = {
         "type": "function",
@@ -46,7 +63,7 @@ create_calendar_event_tool = {
                     "summary": {"type": "string"},
                     "description": {"type": "string"},
                     "location": {"type": "string"},
-                    "start_datetime": {"type": "string"},
+                    "start_datetime": {"type": "string","description":"ISO 8601 時間"},
                     "end_datetime": {"type": "string"},
                     "timezone": {"type": "string", "default": "Asia/Taipei"},
                     "attendees": {
@@ -61,4 +78,4 @@ create_calendar_event_tool = {
             "strict": True,
         },
     }
-TOOLS = [get_system_information_tool,get_taipei_time_tool,timer_notify]
+TOOLS = [get_system_information_tool,timer_notify_bySec]

@@ -5,6 +5,7 @@ TASK = TASK()
 
 DISPATCH = {
     "get_system_information":SYS_TOOL.get_system_information,
-    "get_taipei_time":SYS_TOOL.get_taipei_time,
-    "timer_notify":TASK.timer_notify
+    "timer_notify_bySec":TASK.timer_notify_bySec,
+    "timer_notify_byISO8601":TASK.timer_notify_byISO8601
+    # "get_taipei_time":SYS_TOOL.get_taipei_time,
 }

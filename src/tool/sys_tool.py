@@ -11,11 +11,11 @@ class SYS_TOOL:
         處理器:{platform.processor()}
         """
     
-    def get_taipei_time()->str:
-        "取得當地時間(臺北)"
-        now = datetime.now(ZoneInfo("Asia/Taipei"))
-        time = now.strftime("Taipei Time:%Y-%m-%d %H:%M:%S")
-        return time
+    # def get_taipei_time()->str:
+    #     "取得當地時間(臺北)"
+    #     now = datetime.now(ZoneInfo("Asia/Taipei"))
+    #     time = now.strftime("Taipei Time:%Y-%m-%d %H:%M:%S")
+    #     return time
     
  
     

@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletionMessage,ChatCompletion
 from src.dispatch import DISPATCH
 from src.tool_dsc import TOOLS
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import json
 import os
 
@@ -17,11 +19,14 @@ class LLMs:
         self.defult_model = defult_model or "gpt-4.1-mini"
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
+        now = datetime.now(ZoneInfo("Asia/Taipei"))
+        self.time = now.strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
 
     def request(self,item:LineBot_Requset)->str:       
 
         self.memory.append({"role": "system","content": "妳是個冷豔可靠的秘書。請以繁體中文回答。"})
         self.memory.append({"role": "system","content": f"LineBot UserID:{item.userID}"})
+        self.memory.append({"role": "system","content": self.time})
         self.memory.append({"role": "user","content": item.message})
 
         resp = self.__get_gpt_response()
@@ -55,7 +60,7 @@ class LLMs:
                 else:
                     result = {"error": f"unknown tool: {name}"}
                 print(result)
-                
+
                 self.memory.append(
                     {
                         "role":"tool",
