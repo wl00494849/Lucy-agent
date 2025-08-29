@@ -24,7 +24,7 @@ class LLMs:
 
     def request(self,item:LineBot_Requset)->str:       
 
-        self.memory.append({"role": "system","content": "妳是個冷豔可靠的秘書。請以繁體中文回答。"})
+        self.memory.append({"role": "system","content": "妳是個可靠的秘書。請以繁體中文回答。"})
         self.memory.append({"role": "system","content": f"LineBot UserID:{item.userID}"})
         self.memory.append({"role": "system","content": self.time})
         self.memory.append({"role": "user","content": item.message})
@@ -42,7 +42,8 @@ class LLMs:
             resp = self.__get_gpt_response()
             Tc = resp.choices[0].message.tool_calls
             print(resp.choices[0].message.content)
-                
+        
+        self.memory = []
         return resp.choices[0].message.content
 
     def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):

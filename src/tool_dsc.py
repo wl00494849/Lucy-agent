@@ -53,29 +53,57 @@ get_system_information_tool = {
 # }
 
 create_calendar_event_tool = {
-        "type": "function",
-        "function": {
-            "name": "create_calendar_event",
-            "description": "在 Google 行事曆建立事件(ISO 8601 時間）。",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "summary": {"type": "string"},
-                    "description": {"type": "string"},
-                    "location": {"type": "string"},
-                    "start_datetime": {"type": "string","description":"ISO 8601 時間"},
-                    "end_datetime": {"type": "string"},
-                    "timezone": {"type": "string", "default": "Asia/Taipei"},
-                    "attendees": {
-                        "type": "array",
-                        "items": {"type": "string", "format": "email"},
-                    },
-                    "reminders_minutes_before": {"type": "integer"},
-                },
-                "required": ["summary", "start_datetime", "end_datetime"],
-                "additionalProperties": False,
-            },
-            "strict": True,
+  "type": "function",
+  "function": {
+    "name": "create_calendar_event",
+    "description": "在 Google 行事曆建立事件（時間需為 ISO 8601，含時區）。",
+    "parameters": {
+      "type": "object",
+      "description": "建立行事曆事件所需的參數物件。",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "事件標題"
         },
+        "description": {
+          "type": "string",
+          "description": "事件描述"
+        },
+
+        "start_datetime": {
+          "type": "string",
+          "description": "開始時間（ISO 8601，含時區）"
+        },
+        "end_datetime": {
+          "type": "string",
+          "description": "結束時間（ISO 8601，含時區）"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "IANA 時區，如 Asia/Taipei",
+          "default": "Asia/Taipei"
+        },
+        "attendees": {
+          "type": "array",
+          "description": "與會者 email 清單",
+          "items": {
+            "type": "string",
+            "format": "email",
+            "description": "與會者 email"
+          }
+        },
+        "reminders_minutes_before": {
+          "type": "integer",
+          "description": "幾分鐘前跳出通知（popup）"
+        }
+      },
+      "required": [
+        "summary",
+        "start_datetime",
+        "end_datetime"
+      ],
     }
-TOOLS = [get_system_information_tool,timer_notify_bySec]
+  }
+}
+
+TOOLS = [get_system_information_tool,timer_notify_bySec,create_calendar_event_tool]

@@ -1,5 +1,6 @@
 *.env
 *.tar
+credentials.json
 myenv
 __pycache__
 test.py
