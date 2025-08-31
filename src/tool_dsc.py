@@ -69,39 +69,20 @@ create_calendar_event_tool = {
           "type": "string",
           "description": "事件描述"
         },
-
-        "start_datetime": {
+        "start_time": {
           "type": "string",
           "description": "開始時間（ISO 8601，含時區）"
         },
-        "end_datetime": {
+        "end_time": {
           "type": "string",
           "description": "結束時間（ISO 8601，含時區）"
         },
-        "timezone": {
-          "type": "string",
-          "description": "IANA 時區，如 Asia/Taipei",
-          "default": "Asia/Taipei"
-        },
-        "attendees": {
-          "type": "array",
-          "description": "與會者 email 清單",
-          "items": {
-            "type": "string",
-            "format": "email",
-            "description": "與會者 email"
-          }
-        },
-        "reminders_minutes_before": {
+        "remind_time": {
           "type": "integer",
           "description": "幾分鐘前跳出通知（popup）"
         }
       },
-      "required": [
-        "summary",
-        "start_datetime",
-        "end_datetime"
-      ],
+      "required": ["summary","start_time","end_time"],
     }
   }
 }

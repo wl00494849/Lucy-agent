@@ -51,25 +51,24 @@ class LLMs:
             name = tc.function.name
             args = json.loads(tc.function.arguments or "{}")
             if name in DISPATCH:
-                if name in DISPATCH:
-                    try:
-                        result = DISPATCH[name](**args)
-                    except TypeError as e:
-                        result = {"error": f"bad arguments: {e}"}
-                    except Exception as e:
-                        result = {"error": f"handler failed: {e}"}
-                else:
-                    result = {"error": f"unknown tool: {name}"}
-                print(result)
+                try:
+                    result = DISPATCH[name](**args)
+                except TypeError as e:
+                    result = {"error": f"bad arguments: {e}"}
+                except Exception as e:
+                    result = {"error": f"handler failed: {e}"}
+            else:
+                result = {"error": f"unknown tool: {name}"}
+                    
+            print(result)
 
-                self.memory.append(
-                    {
-                        "role":"tool",
-                        "tool_call_id":tc.id,
-                        "name":name,
-                        "content":json.dumps(result,ensure_ascii=False)
-                    }
-                )
+            self.memory.append(
+                {
+                    "role":"tool",
+                    "tool_call_id":tc.id,
+                    "content":json.dumps(result,ensure_ascii=False)
+                }
+            )
         
     def __get_gpt_response(self,)->ChatCompletion:
         return self.client.chat.completions.create(
@@ -78,18 +77,18 @@ class LLMs:
             tools=TOOLS
         )
 
-    def __add_tool_message(self,Tc:ChatCompletionMessageFunctionToolCall,msg:ChatCompletionMessage):
-        for tc in Tc:
-            self.memory.append({
-                "role": "assistant",
-                "content":  msg.content or "",
-                "tool_calls": [
-                    {
-                        "id": tc.id,
-                        "type": "function",
-                        "function": {
-                            "name": tc.function.name,
-                            "arguments": tc.function.arguments,
-                        }
-                    }]
-            })
+    def __add_tool_message(self, Tc, msg):
+        self.memory.append({
+            "role": "assistant",
+            "content": msg.content or "",
+            "tool_calls": [
+                {
+                    "id": tc.id,
+                    "type": "function",
+                    "function": {
+                        "name": tc.function.name,
+                        "arguments": tc.function.arguments,
+                    }
+                } for tc in Tc
+            ]
+        })

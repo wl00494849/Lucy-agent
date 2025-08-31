@@ -3,6 +3,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 class SYS_TOOL:
+    
     def get_system_information()->str:
         "取得當前系統資訊"
         return f"""

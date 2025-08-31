@@ -3,11 +3,11 @@ from src.env import load_env
 from src.LLMs import LLMs
 
 app = FastAPI()
+gpt = LLMs()
 load_env()
 
 @app.post("/gpt")
 def gpt(item:LLMs.LineBot_Requset):
-    gpt = LLMs()
     resp = gpt.request(item=item)
     return {"response":resp}
 
