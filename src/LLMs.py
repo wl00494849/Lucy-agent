@@ -43,7 +43,6 @@ class LLMs:
             Tc = resp.choices[0].message.tool_calls
             print(resp.choices[0].message.content)
         
-        self.memory = []
         return resp.choices[0].message.content
 
     def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):

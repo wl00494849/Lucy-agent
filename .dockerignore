@@ -4,3 +4,4 @@ myenv
 .git
 *.tar
 test.py
+credentials.json

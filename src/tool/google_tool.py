@@ -24,14 +24,14 @@ class google_tool:
             service = build("calendar", "v3", credentials=creds)
             if remind_time is not None:
                 reminders = {
-                    "useDefault": "false",
+                    "useDefault": False,
                     "overrides": [
                         {"method": "popup", "minutes": remind_time}
                     ]
                 }
             else:
                 reminders = {
-                    "useDefault": "true"
+                    "useDefault": True
                 }
 
             event_body = {
