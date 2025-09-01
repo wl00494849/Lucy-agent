@@ -88,6 +88,7 @@ class LLMs:
                         "name": tc.function.name,
                         "arguments": tc.function.arguments,
                     }
+                ## 在陣列中append新的json
                 } for tc in Tc
             ]
         })

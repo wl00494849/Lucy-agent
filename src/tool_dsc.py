@@ -42,16 +42,6 @@ get_system_information_tool = {
     }
 }
 
-# get_taipei_time_tool = {
-#     "type":"function",
-#     "function":{
-#         "name":"get_taipei_time",
-#         "description":"取得當地時間(臺北)",
-#         "parameters":{},
-#         "required":[]
-#     }
-# }
-
 create_calendar_event_tool = {
   "type": "function",
   "function": {
@@ -87,4 +77,4 @@ create_calendar_event_tool = {
   }
 }
 
-TOOLS = [get_system_information_tool,timer_notify_bySec,create_calendar_event_tool]
+TOOLS = [get_system_information_tool,timer_notify_byISO8601,timer_notify_bySec,create_calendar_event_tool]
