@@ -15,7 +15,7 @@ class Task:
         "LineBot以ISO8601定時通知"
         end_time = parser.isoparse(time_iso)
         diff = end_time - self.time_now
-        timer = threading.Timer(interval=diff.total_seconds,function=self.linebot_notify,
+        timer = threading.Timer(interval=int(diff.total_seconds),function=self.linebot_notify,
                                 kwargs={
                                     "message":message,
                                     "userid":userid

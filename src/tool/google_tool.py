@@ -7,6 +7,10 @@ class Google_Tool:
     def __init__(self):
         self.user_email = os.getenv("USER_GOOGLE_EMAIL")
         self.GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        self.creds = service_account.Credentials.from_service_account_file(
+                self.GOOGLE_APPLICATION_CREDENTIALS,
+                scopes=["https://www.googleapis.com/auth/calendar"],
+        )
         
     def create_calendar_event(self,
                               summary: str,
@@ -16,18 +20,13 @@ class Google_Tool:
                               description: str = ""
                               )->str:
         try:
-            creds = service_account.Credentials.from_service_account_file(
-                self.GOOGLE_APPLICATION_CREDENTIALS,
-                scopes=["https://www.googleapis.com/auth/calendar"],
-            )
-
-            service = build("calendar", "v3", credentials=creds)
+            service = build("calendar", "v3", credentials=self.creds)
             if remind_time is not None:
                 reminders = {
                     "useDefault": False,
-                    "overrides": [
-                        {"method": "popup", "minutes": remind_time}
-                    ]
+                    'overrides': [
+                            {"method": "popup", "minutes": remind_time},
+                        ]
                 }
             else:
                 reminders = {
