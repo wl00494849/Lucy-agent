@@ -2,7 +2,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import os
 
-class google_tool:
+class Google_Tool:
         
     def __init__(self):
         self.user_email = os.getenv("USER_GOOGLE_EMAIL")

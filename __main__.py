@@ -1,15 +1,9 @@
 from fastapi import FastAPI
-from src.env import load_env
-from src.LLMs import LLMs
+from router.api_v1 import router as LLMs
 
 app = FastAPI()
-load_env()
+app.include_router(LLMs)
 
-@app.post("/gpt")
-def gpt(item:LLMs.LineBot_Requset):
-    gpt = LLMs()
-    resp = gpt.request(item=item)
-    return {"response":resp}
 
 if __name__ == "__main__":
     import uvicorn

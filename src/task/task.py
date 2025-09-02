@@ -5,7 +5,7 @@ import threading
 import requests
 import os
 
-class TASK:
+class Task:
     def __init__(self):
         self.linebot_url = os.getenv("LINEBOT_API_URL")
         self.time_now = datetime.now(ZoneInfo("Asia/Taipei"))

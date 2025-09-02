@@ -1,6 +1,6 @@
 import platform
 
-class SYS_TOOL:
+class Sys_Tool:
 
     def get_system_information()->str:
         "取得當前系統資訊"
