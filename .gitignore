@@ -1,5 +1,6 @@
 *.env
 *.tar
+.DS_Store
 credentials.json
 myenv
 __pycache__
