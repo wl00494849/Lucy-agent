@@ -5,8 +5,8 @@ import os
 class Google_Tool:
         
     def __init__(self):
-        self.user_email = os.getenv("USER_GOOGLE_EMAIL")
-        self.GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        self.USER_EMAIL = os.getenv("USER_GOOGLE_EMAIL")
+        self.GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or "credentials.json"
         self.creds = service_account.Credentials.from_service_account_file(
                 self.GOOGLE_APPLICATION_CREDENTIALS,
                 scopes=["https://www.googleapis.com/auth/calendar"],
@@ -46,8 +46,9 @@ class Google_Tool:
                 },
                 "reminders": reminders
             }
+
             created_event = service.events().insert(
-                calendarId=self.user_email,
+                calendarId=self.USER_EMAIL,
                 body=event_body,
                 sendUpdates="all"
             ).execute()

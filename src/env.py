@@ -10,6 +10,6 @@ def load_env(path:str=".env"):
                 if "=" not in line:
                     continue
                 key,val = line.split("=",1)
-                key= key.strip()
-                val= val.strip().strip('"').strip("'")
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
                 os.environ[key]=val

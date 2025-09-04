@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from router.api_v1 import router as LLMs
+import logging
 
 app = FastAPI()
 app.include_router(LLMs)

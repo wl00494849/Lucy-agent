@@ -19,8 +19,7 @@ class LLMs:
         self.defult_model = defult_model or "gpt-4.1-mini"
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
-        now = datetime.now(ZoneInfo("Asia/Taipei"))
-        self.time = now.strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
+        self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
 
     def request(self,item:LineBot_Requset)->str:       
 
@@ -69,7 +68,7 @@ class LLMs:
                 }
             )
         
-    def __get_gpt_response(self,)->ChatCompletion:
+    def __get_gpt_response(self)->ChatCompletion:
         return self.client.chat.completions.create(
             model=self.defult_model,
             messages=self.memory,

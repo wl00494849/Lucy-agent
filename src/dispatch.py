@@ -10,5 +10,4 @@ DISPATCH = {
     "timer_notify_bySec":Task.timer_notify_bySec,
     "timer_notify_byISO8601":Task.timer_notify_byISO8601,
     "create_calendar_event":Google_Tool.create_calendar_event
-    # "get_taipei_time":SYS_TOOL.get_taipei_time,
 }
