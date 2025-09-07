@@ -34,7 +34,6 @@ class LLMs:
         Tc = msg.tool_calls
 
         while Tc is not None:
-            print(Tc)
             self.__add_tool_message(Tc,msg)
             self.__gpt_tool_call(Tc)
 
@@ -48,6 +47,7 @@ class LLMs:
         for tc in Tc:
             name = tc.function.name
             args = json.loads(tc.function.arguments or "{}")
+            print(f"{name}:{args}")
             if name in DISPATCH:
                 try:
                     result = DISPATCH[name](**args)
