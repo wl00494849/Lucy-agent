@@ -7,5 +7,5 @@ class Redis :
 
     def set_history(self):
         pass
-    def __set_redis(self):
+    def Set(self):
         pass

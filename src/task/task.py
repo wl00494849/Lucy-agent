@@ -41,7 +41,12 @@ class Task:
         return f"設定成功{time_up}通知"
     
     def linebot_notify(self,message:str,userid:str):
-        url = self.linebot_url + "/push_message"
-        date = {"message":message,"userID":userid}
-        resp = requests.post(url=url,json=date)
-        print(resp.status_code)
+        print(message)
+        try :
+            url = self.linebot_url + "/push_message"
+            date = {"message":message,"userID":userid}
+            resp = requests.post(url=url,json=date)
+            return resp.status_code
+        
+        except Exception as e:
+            print(e)
