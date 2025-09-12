@@ -33,9 +33,10 @@ class LLMs:
         msg = resp.choices[0].message
         Tc = msg.tool_calls
 
-        if Tc is None:
-            print("抱歉，我無法執行你的要求")
-            return "抱歉，我無法執行你的要求"
+        # Only Use Tool Limit
+        # if Tc is None:
+        #     print("抱歉，我無法執行你的要求")
+        #     return "抱歉，我無法執行你的要求"
 
         while Tc is not None:
             self.__add_tool_message(Tc,msg)

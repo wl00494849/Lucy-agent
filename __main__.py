@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from router.api_v1 import router as LLMs
+from router.api_v1 import LLMs_router ,health_router
 import logging
 
 app = FastAPI()
-app.include_router(LLMs)
+app.include_router(LLMs_router)
+app.include_router(health_router)
 
 
 if __name__ == "__main__":
