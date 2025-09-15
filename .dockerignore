@@ -5,3 +5,4 @@ myenv
 *.tar
 test.py
 credentials.json
+build.bash

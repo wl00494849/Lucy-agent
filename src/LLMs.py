@@ -14,8 +14,8 @@ class LLMs:
         message:str
         userID:str
 
-    def __init__(self,defult_model:str=""):
-        self.__api_key = os.getenv("OPENAI_API_KEY")
+    def __init__(self,api_key:str="",defult_model:str=""):
+        self.__api_key = os.getenv("OPENAI_API_KEY") or api_key
         self.defult_model = defult_model or "gpt-4.1-mini"
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
@@ -32,7 +32,6 @@ class LLMs:
 
         msg = resp.choices[0].message
         Tc = msg.tool_calls
-
         # Only Use Tool Limit
         # if Tc is None:
         #     print("抱歉，我無法執行你的要求")

@@ -1,10 +1,10 @@
 from fastapi import APIRouter,Response
 from src.LLMs import LLMs
 
-LLMs_router = APIRouter(prefix="/gpt",tags=["LLMs"])
+gpt_router = APIRouter(prefix="/gpt",tags=["LLMs"])
 health_router = APIRouter(prefix="/health",tags=["HEALTH"])
 
-@LLMs_router.post("/")
+@gpt_router.post("/")
 async def gpt(item:LLMs.LineBot_Requset):
     gpt = LLMs()
     resp = gpt.request(item=item)

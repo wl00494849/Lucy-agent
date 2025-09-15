@@ -48,7 +48,6 @@ class Google_Tool:
                 },
                 "reminders": reminders
             }
-
             created_event = self.service.events().insert(
                 calendarId=self.USER_EMAIL,
                 body=event_body,
@@ -59,26 +58,27 @@ class Google_Tool:
         except Exception as e:
             return e
         
-    def get_calendar_list(self)->str:
+    def get_calendar_list(self,start_time:str,end_time:str):
         try :
-            tz = pytz.timezone("Asia/Taipei")
-            now = datetime.now(tz=tz)
-            start_day = datetime(now.year, now.month, now.day, 0, 0, 0, tzinfo=tz)
-            end_day = start_day + timedelta(days=1)
-
+            
             events_result = self.service.events().list(
                 calendarId = self.USER_EMAIL,
-                timeMin = start_day,
-                timeMax = end_day,
+                timeMin = start_time,
+                timeMax = end_time,
                 singleEvents=True,
                 orderBy="startTime"
-            )
+            ).execute()
 
             events = events_result.get("items", [])
+            li = []
 
             for event in events:
                 start = event["start"].get("dateTime", event["start"].get("date"))
-                print(start, event["summary"])
-            
+                end = event["end"].get("dateTime",event["end"].get("date"))
+                li.append({"summary":event["summary"],
+                           "start_time":start,
+                           "end_time":end
+                           })  
+            return li
         except Exception as e:
             return e
