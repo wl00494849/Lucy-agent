@@ -4,6 +4,7 @@ from src.task.task import Task
 from src.env import load_env
 
 load_env()
+
 Task = Task()
 Google_Tool = Google_Tool()
 

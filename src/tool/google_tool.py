@@ -1,7 +1,5 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from datetime import datetime,timedelta
-import pytz
 import os
 
 class Google_Tool:
@@ -56,7 +54,7 @@ class Google_Tool:
 
             return f"事件建立成功：{created_event.get('htmlLink')}"
         except Exception as e:
-            return e
+            return f"行事曆建立失敗:{e}"
         
     def get_calendar_list(self,start_time:str,end_time:str):
         try :
@@ -70,15 +68,17 @@ class Google_Tool:
             ).execute()
 
             events = events_result.get("items", [])
-            li = []
+            li:list[dict] = []
 
             for event in events:
                 start = event["start"].get("dateTime", event["start"].get("date"))
                 end = event["end"].get("dateTime",event["end"].get("date"))
-                li.append({"summary":event["summary"],
-                           "start_time":start,
-                           "end_time":end
-                           })  
+                li.append({
+                            "summary":event["summary"],
+                            "start_time":start,
+                            "end_time":end
+                            })  
             return li
         except Exception as e:
-            return e
+            return f"行事曆清單讀取失敗:{e}"
+        

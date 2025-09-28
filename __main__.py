@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from router.api_v1 import gpt_router ,health_router
-import logging
 
 app = FastAPI()
 
