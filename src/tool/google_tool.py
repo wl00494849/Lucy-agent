@@ -12,6 +12,11 @@ class Google_Tool:
                 scopes=["https://www.googleapis.com/auth/calendar"],
         )
         self.service = build("calendar", "v3", credentials=self.creds)
+    
+    def __repr__(self):
+        return f"""
+        Google_Tool(USER_EMAIL = {self.USER_EMAIL})
+        """
         
     def create_calendar_event(self,
                               summary: str,

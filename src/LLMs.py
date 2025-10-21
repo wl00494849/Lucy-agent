@@ -20,7 +20,11 @@ class LLMs:
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
         self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
-
+        
+    def __repr__(self):
+        return f"""
+        LLMs(Model={self.defult_model})
+        """
     def request(self,item:LineBot_Requset)->str:       
 
         self.memory.append({"role": "system","content": "妳是個可靠的秘書。請以繁體中文回答。"})
