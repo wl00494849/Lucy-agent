@@ -11,8 +11,8 @@ pipeline{
         stage("Build Image"){
             steps{
                 echo "building..."
-                sh 'sudo docker build -t python-gpt:pi -f dockerfile .'
-                sh 'sudo docker save python-gpt:pi -o python-gpt.tar'
+                sh 'docker build -t python-gpt:pi -f dockerfile .'
+                sh 'docker save python-gpt:pi -o python-gpt.tar'
             }
         }
 
