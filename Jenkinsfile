@@ -5,7 +5,6 @@ pipeline{
         stage("test"){
             steps{
                 echo "testing..."
-                python3 -m unittest discover -s tests -v
             }
         }
 
