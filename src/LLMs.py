@@ -1,7 +1,7 @@
 from typing import List
 from openai import OpenAI
 from pydantic import BaseModel
-from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletionMessage,ChatCompletion
+from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
 from src.dispatch import DISPATCH
 from src.tool_dsc import TOOLS
 from datetime import datetime
@@ -20,7 +20,7 @@ class LLMs:
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
         self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
-        
+
     def __repr__(self):
         return f"""
         LLMs(Model={self.defult_model})
