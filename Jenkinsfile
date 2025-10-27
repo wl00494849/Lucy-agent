@@ -8,8 +8,7 @@ pipeline{
         stage("Test"){
             steps{
                 echo "testing..."
-                def props = readProerties file: ''
-                python3 -m unittest discover -s tests -v
+                sh 'python3 -m unittest discover -s tests -v'
             }
         }
 
