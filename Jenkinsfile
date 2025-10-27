@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     environment {
-        IMAGE_NAME = 'Lucy_agent'
+        IMAGE_NAME = 'lucy_agent'
         OPENAI_API_KEY = credentials('OPENAI_API_KEY')
     }
 
