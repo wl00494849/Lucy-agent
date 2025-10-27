@@ -22,7 +22,7 @@ pipeline{
                     pip install -r requirements.txt
                 fi
                 echo 'testing'
-                python3 -m unittest discover -s tests -v
+                python -m unittest discover -s tests -v
                 '''
             }
         }
