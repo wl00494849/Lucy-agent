@@ -21,14 +21,9 @@ pipeline{
                 if [ -f requirements.txt ]; then
                     pip install -r requirements.txt
                 fi
-                '''
-            }
-
-            steps{
-                sh '''
-                    echo 'testing'
-                    export TEST_MODE=True
-                    python -m unittest discover -s tests -v
+                echo '==========testing==========='
+                export TEST_MODE=True
+                python -m unittest discover -s tests -v
                 '''
             }
         }
