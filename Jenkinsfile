@@ -8,14 +8,16 @@ pipeline{
 
     stages{
         stage("Setup Python Env"){
-            sh '''
+            steps{
+                sh '''
                 python3 -m venv venv
                 . venv/bin/active
                 pip3 install --upgrade pip
                 if [ -f requirements.txt ]; then
                     pip3 install -r requirements.txt
                 fi
-            '''
+                '''
+            }
         }
 
         stage("Test"){
