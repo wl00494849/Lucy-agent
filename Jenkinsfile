@@ -1,11 +1,13 @@
 pipeline{
     agent any
+
     environment {
         IMAGE_NAME = "Lucy_agent"
         OPENAI_API_KEY = credentials('OPENAI_API_KEY')
     }
+
     stages{
-        stage('Setup Python Env'){
+        stage("Setup Python Env"){
             sh '''
                 python3 -m venv venv
                 . venv/bin/active
@@ -42,4 +44,4 @@ pipeline{
             }
         }
     }
-}gpt
+}
