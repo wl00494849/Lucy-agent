@@ -2,12 +2,12 @@ pipeline{
     agent any
 
     environment {
-        IMAGE_NAME = "Lucy_agent"
+        IMAGE_NAME = 'Lucy_agent'
         OPENAI_API_KEY = credentials('OPENAI_API_KEY')
     }
 
     stages{
-        stage("Setup Python Env & Testing"){
+        stage('Setup Python Env & Testing'){
             agent {
                 docker {
                     image 'python:3.12-slim'   
@@ -33,7 +33,7 @@ pipeline{
             }
         }
 
-        stage("Build Image"){
+        stage('Build Image'){
             steps{
                 echo "building..."
                 script{
@@ -46,7 +46,7 @@ pipeline{
             }
         }
 
-        stage("Deploy"){
+        stage('Deploy'){
             steps{
                 echo "deploying..."
             }
