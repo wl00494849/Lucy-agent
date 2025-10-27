@@ -35,7 +35,7 @@ pipeline{
                 script{
                     def version = "v1.${env.BUILD_NUMBER}"
                     sh """
-                        docker build -t ${IMAGE_NAME}:${REGISTRY}/${IMAGE_NAME}:${version} -f dockerfile .
+                        docker build -t ${REGISTRY}/${IMAGE_NAME}:${version} -f dockerfile .
                         docker push ${REGISTRY}/${IMAGE_NAME}:${version}
                     """
                 }
