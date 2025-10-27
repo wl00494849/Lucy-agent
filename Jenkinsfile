@@ -28,23 +28,17 @@ pipeline{
             }
         }
 
-        stage('Build Image'){
+        stage('Build Image & Push'){
             steps{
                 echo "building..."
                 script{
-                    def version = "v${env.BUILD_NUMBER}"
+                    def version = "v1.${env.BUILD_NUMBER}"
                     sh """
                         docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
-                        docker save ${IMAGE_NAME}:${version} -o ${IMAGE_NAME}.tar
+                        docker push http://host.docker.internal:5000/${IMAGE_NAME}:${version}
                     """
                 }
             }
-        }
-
-        stage('Deploy'){
-            steps{
-                echo "deploying..."
-            }
-        }
+        }   
     }
 }
