@@ -10,11 +10,11 @@ pipeline{
         stage("Setup Python Env"){
             steps{
                 sh '''
-                python3 -m venv venv
+                python -m venv venv
                 . venv/bin/active
-                pip3 install --upgrade pip
+                pip install --upgrade pip
                 if [ -f requirements.txt ]; then
-                    pip3 install -r requirements.txt
+                    pip install -r requirements.txt
                 fi
                 '''
             }
