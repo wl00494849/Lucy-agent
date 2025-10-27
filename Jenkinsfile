@@ -11,9 +11,10 @@ pipeline{
             agent {
                 docker {
                     image 'python:3.12-slim'   
-                    args '-u root'        
+                    args '-u root -e OPENAI_API_KEY=${OPENAI_API_KEY}'        
                 }
             }
+
             steps{
                 sh '''
                 pip install --upgrade pip
