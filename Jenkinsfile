@@ -8,10 +8,14 @@ pipeline{
 
     stages{
         stage("Setup Python Env"){
+            agent {
+                docker {
+                image 'python:3.12-slim'   
+                args '-u root'        
+            }
+      }
             steps{
                 sh '''
-                python -m venv venv
-                . venv/bin/active
                 pip install --upgrade pip
                 if [ -f requirements.txt ]; then
                     pip install -r requirements.txt
