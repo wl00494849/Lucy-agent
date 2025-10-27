@@ -3,6 +3,7 @@ pipeline{
 
     environment {
         IMAGE_NAME = 'lucy_agent'
+        REGISTRY = 'host.docker.internal:5000'
         OPENAI_API_KEY = credentials('OPENAI_API_KEY')
     }
 
@@ -34,8 +35,8 @@ pipeline{
                 script{
                     def version = "v1.${env.BUILD_NUMBER}"
                     sh """
-                        docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
-                        docker push host.docker.internal:5000/${IMAGE_NAME}:${version}
+                        docker build -t ${IMAGE_NAME}:${REGISTRY}/${IMAGE_NAME}:${version} -f dockerfile .
+                        docker push ${REGISTRY}/${IMAGE_NAME}:${version}
                     """
                 }
             }
