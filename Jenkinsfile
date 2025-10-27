@@ -22,6 +22,7 @@ pipeline{
                     pip install -r requirements.txt
                 fi
                 echo 'testing'
+                export TEST_MODE = "True"
                 python -m unittest discover -s tests -v
                 '''
             }
