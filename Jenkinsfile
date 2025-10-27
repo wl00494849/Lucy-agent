@@ -31,8 +31,8 @@ pipeline{
 
         stage("Build Image"){
             steps{
-                scrips{
-                    echo "building..."
+                echo "building..."
+                script{
                     def version = "v${env.BUILD_NUMBER}"
                     sh '''
                         docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
