@@ -35,7 +35,7 @@ pipeline{
                     def version = "v1.${env.BUILD_NUMBER}"
                     sh """
                         docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
-                        docker push http://host.docker.internal:5000/${IMAGE_NAME}:${version}
+                        docker push host.docker.internal:5000/${IMAGE_NAME}:${version}
                     """
                 }
             }
