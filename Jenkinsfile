@@ -31,12 +31,14 @@ pipeline{
 
         stage("Build Image"){
             steps{
-                echo "building..."
-                def version = "v${env.BUILD_NUMBER}"
-                sh '''
-                    docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
-                    docker save ${IMAGE_NAME}:${version} -o ${IMAGE_NAME}.tar
-                '''
+                scrips{
+                    echo "building..."
+                    def version = "v${env.BUILD_NUMBER}"
+                    sh '''
+                        docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
+                        docker save ${IMAGE_NAME}:${version} -o ${IMAGE_NAME}.tar
+                    '''
+                }
             }
         }
 
