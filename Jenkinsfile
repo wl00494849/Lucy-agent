@@ -7,28 +7,21 @@ pipeline{
     }
 
     stages{
-        stage("Setup Python Env"){
+        stage("Setup Python Env & Testing"){
             agent {
                 docker {
-                image 'python:3.12-slim'   
-                args '-u root'        
+                    image 'python:3.12-slim'   
+                    args '-u root'        
+                }
             }
-      }
             steps{
                 sh '''
                 pip install --upgrade pip
                 if [ -f requirements.txt ]; then
                     pip install -r requirements.txt
                 fi
-                '''
-            }
-        }
-
-        stage("Test"){
-            steps{
-                echo "testing..."
-                sh '''
-                    python -m unittest discover -s tests -v
+                echo 'testing'
+                python3 -m unittest discover -s tests -v
                 '''
             }
         }
