@@ -35,7 +35,7 @@ pipeline{
                     def version = "v1.${env.BUILD_NUMBER}"
                     def registry = sh(script: 'getent hosts host.docker.internal | awk \'{print $1}\' || true', returnStdout: true).trim()
                     sh """
-                        docker build -t ${registry}/${IMAGE_NAME}:${version} -f dockerfile .
+                        docker build -t ${registry}:5000/${IMAGE_NAME}:${version} -f dockerfile .
                         docker push ${registry}/${IMAGE_NAME}:${version}
                     """
                 }
