@@ -21,9 +21,14 @@ pipeline{
                 if [ -f requirements.txt ]; then
                     pip install -r requirements.txt
                 fi
-                echo 'testing'
-                export TEST_MODE=True
-                python -m unittest discover -s tests -v
+                '''
+            }
+
+            steps{
+                sh '''
+                    echo 'testing'
+                    export TEST_MODE=True
+                    python -m unittest discover -s tests -v
                 '''
             }
         }
@@ -33,10 +38,10 @@ pipeline{
                 echo "building..."
                 script{
                     def version = "v${env.BUILD_NUMBER}"
-                    sh '''
+                    sh """
                         docker build -t ${IMAGE_NAME}:${version} -f dockerfile .
                         docker save ${IMAGE_NAME}:${version} -o ${IMAGE_NAME}.tar
-                    '''
+                    """
                 }
             }
         }
