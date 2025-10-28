@@ -4,6 +4,6 @@ requests
 uvicorn
 python-dateutil
 google-auth 
-google-api-python-client
+google-api-python-client==2.171.0
 redis
 pytz
