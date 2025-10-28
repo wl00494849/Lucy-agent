@@ -7,6 +7,14 @@ pipeline{
     }
 
     stages{
+        stage('Set Env'){
+            steps{
+                script{
+                    env.VERSION = "v1.${env.BUILD_NUMBER}"
+                    env.REGISTRY = sh(script: 'getent hosts host.docker.internal | awk \'{print $1}\' || true', returnStdout: true).trim()
+                }
+            }
+        }
         stage('Setup Python Env & Testing'){
             agent {
                 // 環境隔離
@@ -30,18 +38,25 @@ pipeline{
             }
         }
 
-        stage('Build Image & Push'){
+        stage('Build Image'){
             steps{
                 echo "building..."
                 script{
-                    def version = "v1.${env.BUILD_NUMBER}"
-                    def registry = sh(script: 'getent hosts host.docker.internal | awk \'{print $1}\' || true', returnStdout: true).trim()
                     sh """
-                        docker build -t ${registry}:5000/${IMAGE_NAME}:${version} -f dockerfile .
-                        docker push ${registry}:5000/${IMAGE_NAME}:${version}
+                        docker build -t ${env.REGISTRY}:5000/${IMAGE_NAME}:${env.VERSION} -f dockerfile .
                     """
                 }
             }
-        }   
+        }
+        stage('Push Image'){
+            steps{
+                echo "pushing"
+                script{
+                    sh"""
+                        docker push ${env.REGISTRY}:5000/${IMAGE_NAME}:${env.VERSION}
+                    """
+                }
+            }
+        }
     }
 }
