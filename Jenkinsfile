@@ -9,6 +9,7 @@ pipeline{
     stages{
         stage('Setup Python Env & Testing'){
             agent {
+                // 環境隔離
                 docker {
                     image 'python:3.12-slim'   
                     args '-u root -e OPENAI_API_KEY=${OPENAI_API_KEY}'        
