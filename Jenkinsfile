@@ -22,6 +22,7 @@ pipeline{
                 if [ -f requirements.txt ]; then
                     pip install -r requirements.txt
                 fi
+                pip install packaging
                 echo '==========testing==========='
                 export TEST_MODE=True
                 python -m unittest discover -s tests -v
