@@ -2,11 +2,13 @@ from src.tool.sys_tool import Sys_Tool
 from src.tool.google_tool import Google_Tool
 from src.task.task import Task
 from src.env import load_env
+import os
 
 load_env()
 
-Task = Task()
-Google_Tool = Google_Tool()
+if not os.getenv("TEST_MODE"):
+    Task = Task()
+    Google_Tool = Google_Tool()
 
 DISPATCH = {
     "get_system_information":Sys_Tool.get_system_information,

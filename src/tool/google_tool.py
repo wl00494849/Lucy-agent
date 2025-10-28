@@ -5,14 +5,13 @@ import os
 class Google_Tool:
         
     def __init__(self):
-        if not os.getenv("TEST_MODE"):
-            self.USER_EMAIL = os.getenv("USER_GOOGLE_EMAIL")
-            self.GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or "credentials.json"
-            self.creds = service_account.Credentials.from_service_account_file(
-                self.GOOGLE_APPLICATION_CREDENTIALS,
-                scopes=["https://www.googleapis.com/auth/calendar"],
-            )   
-            self.service = build("calendar", "v3", credentials=self.creds)
+        self.USER_EMAIL = os.getenv("USER_GOOGLE_EMAIL")
+        self.GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or "credentials.json"
+        self.creds = service_account.Credentials.from_service_account_file(
+            self.GOOGLE_APPLICATION_CREDENTIALS,
+            scopes=["https://www.googleapis.com/auth/calendar"],
+        )   
+        self.service = build("calendar", "v3", credentials=self.creds)
         
     def __repr__(self):
         return f"""
