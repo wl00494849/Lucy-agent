@@ -6,9 +6,8 @@ import os
 
 load_env()
 
-if not os.getenv("TEST_MODE"):
-    Task = Task()
-    Google_Tool = Google_Tool()
+Task = Task()
+Google_Tool = Google_Tool()
 
 DISPATCH = {
     "get_system_information":Sys_Tool.get_system_information,
