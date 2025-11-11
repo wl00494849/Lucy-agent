@@ -48,6 +48,7 @@ pipeline{
                 }
             }
         }
+        
         stage('Push Image'){
             steps{
                 echo "pushing"
