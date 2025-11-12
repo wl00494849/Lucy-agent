@@ -1,6 +1,7 @@
 from datetime import datetime,timedelta
 from zoneinfo import ZoneInfo
 from dateutil import parser
+import time
 import threading
 import requests
 import os
@@ -26,12 +27,17 @@ class Task:
         return f"設定成功{time_up}通知"
     
     def chatbot_notify(self,message:str,userid:str):
+        retries = 3
         print(message)
-        try :
-            url = self.chatbot_url + "/push_message"
-            date = {"message":message,"userID":userid}
-            resp = requests.post(url=url,json=date)
-            return resp.status_code
-        
-        except Exception as e:
-            print(e)
+        for attempt in range(1,retries+1):
+            try :
+                url = self.chatbot_url + "/push_message"
+                data = {"message":message,"userID":userid}
+                resp = requests.post(url=url,json=data)
+                return resp.status_code
+            except Exception as e:
+                print(e)
+                if attempt < retries:
+                    time.sleep(5)
+                else:
+                    return 500
