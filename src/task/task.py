@@ -1,6 +1,5 @@
 from datetime import datetime,timedelta
 from zoneinfo import ZoneInfo
-from dateutil import parser
 import time
 import threading
 import requests
