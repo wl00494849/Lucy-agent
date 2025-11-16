@@ -16,7 +16,7 @@ class LLMs:
 
     def __init__(self,api_key:str="",defult_model:str=""):
         self.__api_key = os.getenv("OPENAI_API_KEY") or api_key
-        self.defult_model = defult_model or "gpt-5.1-mini"
+        self.defult_model = defult_model or "gpt-5.1"
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
         self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
