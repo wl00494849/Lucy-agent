@@ -1,4 +1,3 @@
-from typing import List
 from openai import OpenAI
 from pydantic import BaseModel
 from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
@@ -60,7 +59,6 @@ class LLMs:
             Tc = resp.choices[0].message.tool_calls
             print(resp.choices[0].message.content)
         
-        print(resp.choices[0].message.content)
         return resp.choices[0].message.content
 
     def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):
