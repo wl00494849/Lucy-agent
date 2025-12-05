@@ -2,8 +2,9 @@ from typing import List
 from openai import OpenAI
 from pydantic import BaseModel
 from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
-from src.dispatch import DISPATCH
-from src.tool_dsc import TOOLS
+from tool.dispatch import DISPATCH
+from tool.tool_dsc import TOOLS
+from src.reader import markdownReader
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import json
@@ -19,18 +20,27 @@ class LLMs:
         self.defult_model = defult_model or "gpt-5.1"
         self.client = OpenAI(api_key=self.__api_key)
         self.memory = []
-        self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("當地臺北時間:%Y-%m-%d %H:%M:%S")
+        self.time = datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S")
 
     def __repr__(self):
         return f"""
         LLMs(Model={self.defult_model})
         """
+    def vector(self,term:str):
+
+        pass
+
     def request(self,item:LineBot_Requset)->str:       
 
-        self.memory.append({"role": "system","content": "妳是個可靠的秘書。請以繁體中文回答。"})
-        self.memory.append({"role": "system","content": f"LineBot UserID:{item.userID}"})
-        self.memory.append({"role": "system","content": self.time})
-        self.memory.append({"role": "user","content": item.message})
+        # system prompt setting
+        temple = markdownReader("prompts/agent.md")
+        system_prompt = temple.substitute(
+            time = self.time,
+            userid = item.userID
+        )
+
+        self.memory.append({"role":"system","content":system_prompt})
+        self.memory.append({"role":"user","content": item.message})
 
         resp = self.__get_gpt_response()
 
@@ -50,6 +60,7 @@ class LLMs:
             Tc = resp.choices[0].message.tool_calls
             print(resp.choices[0].message.content)
         
+        print(resp.choices[0].message.content)
         return resp.choices[0].message.content
 
     def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):
@@ -69,6 +80,7 @@ class LLMs:
                     
             print(result)
 
+            ##回傳function執行結果
             self.memory.append(
                 {
                     "role":"tool",

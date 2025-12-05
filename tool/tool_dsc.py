@@ -40,7 +40,7 @@ create_calendar_event_tool = {
   "type": "function",
   "function": {
     "name": "create_calendar_event",
-    "description": "在 Google 行事曆建立事件（時間需為 ISO 8601，含時區）。",
+    "description": "在 Google 行事曆建立事件（時間需為 ISO 8601，含時區)。",
     "parameters": {
       "type": "object",
       "description": "建立行事曆事件所需的參數物件。",

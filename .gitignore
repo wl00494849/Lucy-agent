@@ -1,6 +1,7 @@
 *.env
 *.tar
 *.DS_Store
+data/playbook/環境設定.md
 credentials.json
 myenv
 __pycache__
