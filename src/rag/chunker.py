@@ -1,9 +1,9 @@
 from langchain_text_splitters import MarkdownHeaderTextSplitter
+from langchain_core.documents import Document
 from src.reader import markdownReader
-from pathlib import Path
 
 ## markdown Hierarchical Routing
-def markdownSplitter(path:str):
+def markdownSplitter(path:str)->list[Document]:
 
     headers_to_split_on = [
         ("#", "Header1"),
