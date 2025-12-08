@@ -1,8 +1,8 @@
 from openai import OpenAI
 from pydantic import BaseModel
 from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
-from tool.dispatch import DISPATCH
-from tool.tool_dsc import TOOLS
+from src.tool.dispatch import DISPATCH
+from src.tool.tool_dsc import TOOLS
 from src.reader import markdownReader
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -25,9 +25,18 @@ class LLMs:
         return f"""
         LLMs(Model={self.defult_model})
         """
-    def vector(self,term:str):
+    
+    def vector(self,term:str,size:int=0):
+        model = "text-embedding-3-small"
+        if size > 0:
+            model = "text-embedding-3-large"
 
-        pass
+        response = self.client.embeddings.create(
+            model=model,
+            input=term,
+        )
+
+        return response.data
 
     def request(self,item:LineBot_Requset)->str:       
 
@@ -39,7 +48,13 @@ class LLMs:
         )
 
         self.memory.append({"role":"system","content":system_prompt})
-        self.memory.append({"role":"user","content": item.message})
+        self.memory.append({
+                "role":"user",
+                "content": item.message,
+                "metadata":{
+                    "category":"question"
+                }
+            })
 
         resp = self.__get_gpt_response()
 
@@ -83,7 +98,10 @@ class LLMs:
                 {
                     "role":"tool",
                     "tool_call_id":tc.id,
-                    "content":json.dumps(result,ensure_ascii=False)
+                    "content":json.dumps(result,ensure_ascii=False),
+                    "metadata":{
+                        "category":"tool_result"
+                    }
                 }
             )
         
