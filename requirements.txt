@@ -9,4 +9,4 @@ packaging
 redis
 pytz
 numpy
-scikit-learn
+langchain-openai

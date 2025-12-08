@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
 from src.tool.dispatch import DISPATCH
 from src.tool.tool_dsc import TOOLS
-from src.reader import markdownReader
+from src.reader import markdownTemplateReader
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import json
@@ -38,10 +38,18 @@ class LLMs:
 
         return response.data
 
-    def request(self,item:LineBot_Requset)->str:       
+    def request(self,prompt:str)->str:
+        response = self.client.responses.create(
+            model=self.defult_model,
+            input=prompt
+        )
+
+        return response.output_text
+
+    def linebot_gpt(self,item:LineBot_Requset)->str:       
 
         # system prompt setting
-        temple = markdownReader("prompts/agent.md")
+        temple = markdownTemplateReader("prompts/agent.md")
         system_prompt = temple.substitute(
             time = self.time,
             userid = item.userID

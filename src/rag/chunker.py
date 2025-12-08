@@ -1,9 +1,22 @@
-import re
-from typing import List
+from langchain_text_splitters import MarkdownHeaderTextSplitter
+from src.reader import markdownReader
+from pathlib import Path
 
-def markdown_chunker_byheading(text:str):
-    ## split by head# 1~6
-    parts = re.split(r'(?m)(^#{1,6} .*$)',text)
-    chunks = []
+## markdown Hierarchical Routing
+def markdownSplitter(path:str):
+
+    headers_to_split_on = [
+        ("#", "Header1"),
+        ("##", "Header2"),
+        ("###", "Header3"),
+    ]
+
+    content = markdownReader(path=path)
+    markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on)
+    splitter_text = markdown_splitter.split_text(text=content)
+
+    return splitter_text
+
+
 
 

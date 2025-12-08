@@ -1,6 +1,5 @@
 import logging
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 from src.LLMs import LLMs
 
 ## 取得餘弦相似度
@@ -12,15 +11,13 @@ def get_cosine_similarity(term1:str,term2:str,size:int=0)->float:
         response1 = gpt.vector(term1,size)[0].embedding
         response2 = gpt.vector(term2,size)[0].embedding
 
-        cos = calcute_cos(response1,response2)
+        cos = cosine_similarity(response1,response2)
 
         print(f"cosine_similarity:{cos}")
 
         return cos
 
 ## 計算餘弦相似度
-def calcute_cos(vector1,vector2)->float:
-        di1 = np.array([vector1]).reshape(1, -1)
-        di2 = np.array([vector2]).reshape(1, -1)
-        cos = cosine_similarity(di1,di2)
-        return cos
+def cosine_similarity(vec1, vec2):
+    dot = np.dot(vec1, vec2)
+    return dot / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
