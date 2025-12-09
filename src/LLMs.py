@@ -4,6 +4,7 @@ from openai.types.chat.chat_completion_message_tool_call import ChatCompletionMe
 from openai.types.chat import ChatCompletion
 from src.tool.dispatch import DISPATCH
 from src.tool.tool_dsc import TOOLS
+from src.rag.rag import rag
 from src.reader import markdownTemplateReader
 from datetime import datetime
 from zoneinfo import ZoneInfo
