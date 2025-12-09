@@ -52,7 +52,7 @@ def data_traversal()->tuple[str,list]:
         for dir in dirnames:
             print(f"-子目錄：{dir}")
         for f in filenames:
-            print(f"--檔案名城：{f}")
+            print(f"--檔案名稱：{f}")
             fileName_list += f + "\n"
             file_maps[f] = dirpath + "/" + f
         print("=========================================")
@@ -71,6 +71,7 @@ def generate_hyde_document(query:str)->str:
 ## 找出相關檔案
 def select_relation_file(question:str)->str:
     from src.LLMs import LLMs
+
     fileName_list,file_maps = data_traversal()
     t = markdownTemplateReader("prompts/rag/rag_relation.md")
     prompt = t.substitute(
