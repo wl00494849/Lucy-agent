@@ -1,12 +1,10 @@
 from src.reader import markdownTemplateReader
-from src.LLMs import LLMs
 from src.rag.chunker import markdownSplitter
 from src.rag.similarity import get_cosine_similarity
 from src.rag.heap import max_heap,kv
 import os
 
 def rag(question:str)->str:
-
     print(f"問題：{question}")
     print("=========================================")
 
@@ -40,15 +38,8 @@ def rag(question:str)->str:
 
     return prompt
 
-def exec_rag(question:str)->str:
-    gpt = LLMs()
-    prompt = rag(question)
-    
-    return gpt.request(prompt)
-
 ## 遍歷data資料夾
 def data_traversal()->tuple[str,list]:
-
     root = "data"
     fileName_list = ""
     file_maps = {}
@@ -67,6 +58,7 @@ def data_traversal()->tuple[str,list]:
 
 ## HyDE
 def generate_hyde_document(query:str)->str:
+    from src.LLMs import LLMs
     gpt = LLMs()
     prompt = f"針對以下問題，生成一小段可能存在的文件內容：\n\n{query}\n"
     hyDE = gpt.request(prompt)
@@ -75,9 +67,8 @@ def generate_hyde_document(query:str)->str:
 
 ## 找出相關檔案
 def select_relation_file(question:str)->str:
-
+    from src.LLMs import LLMs
     fileName_list,file_maps = data_traversal()
-
     t = markdownTemplateReader("prompts/rag/rag_relation.md")
     prompt = t.substitute(
         fileName_list = fileName_list,

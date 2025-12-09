@@ -95,18 +95,21 @@ get_calendar_list_tool = {
 }
 
 rag = {
-    "name":"rag",
-    "description":"根據使用者問題從知識庫中檢索最相關的內容。當問題需要外部文件、技術資料、FAQ、產品規格、公司政策或任何非模型內知識時，使用此工具。",
-    "parameters": {
-    "type": "object",
-    "properties": {
-      "question": {
-          "type": "string",
-          "description": "使用者的查詢內容，例如：'如何重設密碼？'"
-        }
-      }
-    },
-    "required": ["question"]
+    "type":"function",
+      "function":{
+          "name":"rag",
+          "description":"根據使用者問題從知識庫中檢索最相關的內容。當問題需要外部文件、技術資料、FAQ、產品規格、公司政策或任何非模型內知識時，使用此工具。",
+          "parameters": {
+          "type": "object",
+          "properties": {
+            "question": {
+                "type": "string",
+                "description": "使用者的查詢內容，例如：'如何重設密碼？'"
+              }
+            }
+          },
+      "required": ["question"]        
+  }
 }
 
 TOOLS = [

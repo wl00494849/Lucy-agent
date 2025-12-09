@@ -1,10 +1,10 @@
 import numpy as np
-from src.LLMs import LLMs
 
 ## 取得餘弦相似度
 def get_cosine_similarity(term1:str,term2:str,size:int=0)->float:
-        gpt = LLMs()
+        from src.LLMs import LLMs
         
+        gpt = LLMs()
         response1 = gpt.vector(term1,size)[0].embedding
         response2 = gpt.vector(term2,size)[0].embedding
 

@@ -1,6 +1,7 @@
 from openai import OpenAI
 from pydantic import BaseModel
-from openai.types.chat import ChatCompletionMessageFunctionToolCall,ChatCompletion
+from openai.types.chat.chat_completion_message_tool_call import ChatCompletionMessageToolCall
+from openai.types.chat import ChatCompletion
 from src.tool.dispatch import DISPATCH
 from src.tool.tool_dsc import TOOLS
 from src.reader import markdownTemplateReader
@@ -46,6 +47,10 @@ class LLMs:
 
         return response.output_text
 
+    def exec_rag(self,question:str)->str:
+        prompt = rag(question)
+        return self.request(prompt)
+
     def linebot_gpt(self,item:LineBot_Requset)->str:       
 
         # system prompt setting
@@ -65,7 +70,6 @@ class LLMs:
             })
 
         resp = self.__get_gpt_response()
-
         msg = resp.choices[0].message
         Tc = msg.tool_calls
         
@@ -84,7 +88,7 @@ class LLMs:
         
         return resp.choices[0].message.content
 
-    def __gpt_tool_call(self,Tc:ChatCompletionMessageFunctionToolCall):
+    def __gpt_tool_call(self,Tc:ChatCompletionMessageToolCall):
         for tc in Tc:
             name = tc.function.name
             args = json.loads(tc.function.arguments or "{}")
