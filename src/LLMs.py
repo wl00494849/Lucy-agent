@@ -98,8 +98,6 @@ class LLMs:
                     result = {"error": f"handler failed: {e}"}
             else:
                 result = {"error": f"unknown tool: {name}"}
-                    
-            print(result)
 
             ##回傳function執行結果
             self.memory.append(

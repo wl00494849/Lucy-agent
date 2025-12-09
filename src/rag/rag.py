@@ -5,31 +5,45 @@ from src.rag.similarity import get_cosine_similarity
 from src.rag.heap import max_heap,kv
 import os
 
+def rag(question:str)->str:
 
-def exec_rag(question:str)->str:
+    print(f"問題：{question}")
+    print("=========================================")
 
-    gpt = LLMs()
     heap = max_heap()
-
     filepath = select_relation_file(question=question)
     chunks = markdownSplitter(filepath)
+
+    print("=========================================")
+    print("HyDE")
     hyDE = generate_hyde_document(question)
+    print("=========================================")
 
     for c in chunks:
-        cos = get_cosine_similarity(hyDE,c.page_content)
-        val = kv(k=c.page_content,v=cos)
-        heap.push(val)
-
+        if c.page_content != "":
+            cos = get_cosine_similarity(hyDE,c.page_content)
+            val = kv(k=c.page_content,v=cos)
+            heap.push(val)
+        print("cosine_similarity")
         print(cos)
+        print(c.page_content)
+        print("=========================================")
 
+    ## top 1
     information = heap.pop().k
-    
+
     t = markdownTemplateReader("prompts/rag/rag_prompt.md")
     prompt = t.substitute(
         question = question,
         information = information
     )
 
+    return prompt
+
+def exec_rag(question:str)->str:
+    gpt = LLMs()
+    prompt = rag(question)
+    
     return gpt.request(prompt)
 
 ## 遍歷data資料夾
@@ -40,9 +54,14 @@ def data_traversal()->tuple[str,list]:
     file_maps = {}
 
     for dirpath,dirnames,filenames in os.walk(root):
+        print(dirpath)
+        for dir in dirnames:
+            print(f"-子目錄：{dir}")
         for f in filenames:
+            print(f"--檔案名城：{f}")
             fileName_list += f + "\n"
             file_maps[f] = dirpath + "/" + f
+        print("=========================================")
 
     return fileName_list,file_maps
 
@@ -67,6 +86,8 @@ def select_relation_file(question:str)->str:
 
     gpt = LLMs()
     result = gpt.request(prompt)
+    print(f"相關檔案：{result}")
+
     filepath = file_maps[result]
 
     return filepath

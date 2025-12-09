@@ -1,7 +1,7 @@
 *.env
 *.tar
 *.DS_Store
-data/playbook/環境設定.md
+data/playbook/Lucy_agent系統文件.md
 credentials.json
 myenv
 __pycache__

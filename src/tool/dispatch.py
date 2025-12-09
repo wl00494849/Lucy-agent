@@ -1,6 +1,7 @@
 from src.tool.sys_tool import Sys_Tool
 from src.tool.google_tool import Google_Tool
 from src.tool.task import Task
+from src.rag.rag import rag
 from src.env import load_env
 import os
 
@@ -11,6 +12,7 @@ if not os.getenv("TEST_MODE"):
     Google_Tool = Google_Tool()
 
 DISPATCH = {
+    "rag":rag,
     "get_system_information":Sys_Tool.get_system_information,
     "get_system_config":Sys_Tool.get_system_config,
     "timer_notify_bySec":Task.timer_notify_bySec,
