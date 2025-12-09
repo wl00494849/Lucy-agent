@@ -5,6 +5,9 @@ from src.rag.heap import max_heap,kv
 import os
 
 def rag(question:str)->str:
+    from src.LLMs import LLMs
+    gpt = LLMs()
+
     print(f"問題：{question}")
     print("=========================================")
 
@@ -36,7 +39,7 @@ def rag(question:str)->str:
         information = information
     )
 
-    return prompt
+    return gpt.request(prompt)
 
 ## 遍歷data資料夾
 def data_traversal()->tuple[str,list]:
