@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from router.api_v1 import gpt_router ,health_router
+from src.router.api_v1 import gpt_router ,health_router
 
 app = FastAPI()
 
