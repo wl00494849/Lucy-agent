@@ -61,7 +61,7 @@ def data_traversal()->tuple[str,list]:
 def generate_hyde_document(query:str)->str:
     from src.LLMs import LLMs
     gpt = LLMs()
-    prompt = f"針對以下問題，生成一小段可能存在的文件內容：\n\n{query}\n"
+    prompt = f"針對以下問題，生成一小段100字以內可能存在的文件內容：\n\n{query}\n"
     hyDE = gpt.request(prompt)
     print(hyDE)
     return hyDE
