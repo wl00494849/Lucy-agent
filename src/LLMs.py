@@ -52,7 +52,7 @@ class LLMs:
         prompt = rag(question)
         return self.request(prompt)
 
-    def linebot_gpt(self,item:LineBot_Requset)->str:       
+    def agent(self,item:LineBot_Requset)->str:       
 
         # system prompt setting
         temple = markdownTemplateReader("prompts/agent.md")

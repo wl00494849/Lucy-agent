@@ -8,7 +8,7 @@ health_router = APIRouter(prefix="/health",tags=["HEALTH"])
 async def gpt(item:LLMs.LineBot_Requset):
     try:
         gpt = LLMs()
-        resp = gpt.linebot_gpt(item=item)
+        resp = gpt.agent(item=item)
         return {"response":resp}
     except Exception as e:
         print(f"GPT Error:{e}")
